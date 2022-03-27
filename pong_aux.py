@@ -15,6 +15,10 @@ def move_player(rect, x_direction, y_direction, top_wall, bottom_wall):
     elif (rect.colliderect(bottom_wall) == 0) and (y_direction == 1):    # downwards movement possible?
         rect.move_ip(x_direction, y_direction)
 
+def move_pong(pong, movement_vector, object_array):
+    # if no collision then move normally
+    # if collision then change direction
+
 
 def draw_everything(screen, object_array):
     """the object array contains elements that should be drawn and their colour
