@@ -3,7 +3,7 @@ import pong_aux
 
 pygame.init()
 
-def iquit():
+def iquit():        # bruteforce shut down
     pygame.quit()
 
 
