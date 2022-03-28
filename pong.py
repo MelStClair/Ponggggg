@@ -17,18 +17,35 @@ players = p_width, p_height = 30, (height - 100)/4
 
 # create rect objects aka the player avatars and the ball
 # todo fix pong spawn
-player1 = pygame.Rect((30, height/2 - p_height/2),(p_width,p_height))
-player2 = pygame.Rect((width-30-p_width,height/2 - p_height/2 ),(p_width, p_height ))
+player1_1 = pygame.Rect((30, height/2 - p_height/2),(p_width,p_height/5))
+player1_2 = pygame.Rect((30, height/2 - p_height/2 + p_height/5),(p_width,p_height/5))
+player1_3 = pygame.Rect((30, height/2 - p_height/2 + (p_height/5)*2),(p_width,p_height/5))
+player1_4 = pygame.Rect((30, height/2 - p_height/2 + (p_height/5)*3),(p_width,p_height/5))
+player1_5 = pygame.Rect((30, height/2 - p_height/2 + (p_height/5)*4),(p_width,p_height/5))
+player2_1 = pygame.Rect((width-30-p_width, height/2 - p_height/2),(p_width, p_height/5 ))
+player2_2 = pygame.Rect((width-30-p_width, height/2 - p_height/2 + p_height/5 ),(p_width, p_height/5 ))
+player2_3 = pygame.Rect((width-30-p_width,height/2 - p_height/2  + (p_height/5)*2),(p_width, p_height/5 ))
+player2_4 = pygame.Rect((width-30-p_width,height/2 - p_height/2 + (p_height/5)*3 ),(p_width, p_height/5 ))
+player2_5 = pygame.Rect((width-30-p_width,height/2 - p_height/2 + (p_height/5)*4 ),(p_width, p_height/5 ))
 pong = pygame.Rect((width/2,height/2), (p_width, p_width))
 topWall = pygame.Rect((0,0),(width, 30))
 bottomWall = pygame.Rect((0,height - 30),(width, 30)) # coordinates upper left corner, width and height
 
-object_array= [[player1, (0,0,0)],
-               [player2, (0,0,0)],
-               [pong, (0,0,0)],
-               [topWall, (165, 165, 165)],
-               [bottomWall, (165, 165, 165)]]
-
+object_array= [[player1_1, (0,0,0)],
+                [player1_2, (0,0,0)],
+                [player1_3, (0,0,0)],
+                [player1_4, (0,0,0)],
+                [player1_5, (0,0,0)],
+                [player2_1, (0,0,0)],
+                [player2_2, (0,0,0)],
+                [player2_3, (0,0,0)],
+                [player2_4, (0,0,0)],
+                [player2_5, (0,0,0)],
+                [pong, (0,0,0)],
+                [topWall, (165, 165, 165)],
+                [bottomWall, (165, 165, 165)]]
+player1 = [player1_1, player1_2, player1_3, player1_4, player1_5]
+player2 = [player2_1, player2_2, player2_3, player2_4, player2_5]
 # starting screen (starting screen works)
 startingScreen = True
 while startingScreen:
@@ -93,7 +110,7 @@ while running:
                 stateP2 = "down"
 
         # pong events
-        # todo: implement this
+        pong_aux.move_pong(pong,(1,1), object_array)
 
         # reset state
         if event.type == pygame.KEYUP:
