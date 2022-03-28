@@ -7,7 +7,11 @@ def setstate(object, state):
 
 def init_everything():
     print("is there some way to put all of the init sdtuff here but still return everything thats necessary?")
-
+def pong_reset(pong, width, height):
+    pong.update((width/2, height/2), (pong.width, pong.height))
+    print("YOU ARE A FAILURE, RESETTING NOW")
+    for i in range(0,1000000):
+        continue
 
 def move_player(player_array, x_direction, y_direction, top_wall, bottom_wall):
     """moves a Rect object by 1 unit in the specified direction -
@@ -21,11 +25,41 @@ def move_player(player_array, x_direction, y_direction, top_wall, bottom_wall):
         for rect in player_array:
             rect.move_ip(x_direction, y_direction)
 
-def move_pong(pong, movement_vector, object_array):
+def move_pong(pong, move_x, move_y, player1, player2, bottom_wall, top_wall, invisible_wall_l, invisible_wall_r):
     # if no collision then move normally
     # idea: add direction based on state of player that sent it
     # if collision then change direction
-    print("useless function")
+    for i in range(1,5):
+        if (pong.colliderect(player1[i]) == 1) or (pong.colliderect(player2[i]) == 1):
+            move_x *= -1
+            if i == 1:
+                move_y = move_y + 2
+            if i == 2:
+                move_y = move_y + 1
+            if i == 3:
+                move_y = 0
+            if i == 4:
+                move_y = move_y + 1
+            if i == 5:
+                move_y = move_y + 2
+            pong.move_ip(move_x, move_y)
+
+    if (pong.colliderect(bottom_wall) == 1) or (pong.colliderect(top_wall) == 1):
+        move_y *= -1
+
+    pong.move_ip(move_x, move_y)
+
+    if pong.colliderect(invisible_wall_l) == 1: # or (pong.colliderect(invisible_wall_l) == 1):
+        print("left out ")
+        return [move_x, move_y, True]
+
+    if pong.colliderect(invisible_wall_r) == 1: # or (pong.colliderect(invisible_wall_l) == 1):
+        print("right out ")
+        return [move_x, move_y, True]
+
+
+    return [move_x, move_y, False]
+
 
 def draw_everything(screen, object_array):
     """the object array contains elements that should be drawn and their colour

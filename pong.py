@@ -30,6 +30,9 @@ player2_5 = pygame.Rect((width-30-p_width,height/2 - p_height/2 + (p_height/5)*4
 pong = pygame.Rect((width/2,height/2), (p_width, p_width))
 topWall = pygame.Rect((0,0),(width, 30))
 bottomWall = pygame.Rect((0,height - 30),(width, 30)) # coordinates upper left corner, width and height
+invisible_wall_l = pygame.Rect((0,0), (20, height))
+invisible_wall_r = pygame.Rect((width-20,0), (20, height))
+
 
 object_array= [[player1_1, (0,0,0)],
                 [player1_2, (0,0,0)],
@@ -46,7 +49,8 @@ object_array= [[player1_1, (0,0,0)],
                 [bottomWall, (165, 165, 165)]]
 player1 = [player1_1, player1_2, player1_3, player1_4, player1_5]
 player2 = [player2_1, player2_2, player2_3, player2_4, player2_5]
-# starting screen (starting screen works)
+
+# starting screen
 startingScreen = True
 while startingScreen:
     startscreenEvent = pygame.event.wait()
@@ -58,6 +62,8 @@ while startingScreen:
             startingScreen = False
 
     pong_aux.draw_everything(screen, object_array)
+    pygame.draw.rect(screen, (0,0,255), invisible_wall_r)
+    pygame.draw.rect(screen, (0,0,255), invisible_wall_l)
     pygame.display.flip()
 
 # Run until the user asks to quit
@@ -65,7 +71,7 @@ running = True
 # init states - states show if a button is being pressed for a longer time
 stateP1 = "none"
 stateP2 = "none"
-
+pong_movement= move_x, move_y = 1,0
 while running:
 
     # keeping button pressed P1
@@ -109,9 +115,6 @@ while running:
                 pong_aux.move_player(player2, 0, -1, topWall, bottomWall)
                 stateP2 = "down"
 
-        # pong events
-        pong_aux.move_pong(pong,(1,1), object_array)
-
         # reset state
         if event.type == pygame.KEYUP:
             if (event.key == pygame.K_w) or (event.key == pygame.K_s):
@@ -119,8 +122,17 @@ while running:
             elif (event.key == pygame.K_UP) or (event.key == pygame.K_DOWN):
                 stateP2 = "none"
 
+    # move pong, update movement vector
+    update_v = pong_aux.move_pong(pong, move_x, move_y, player1, player2, bottomWall, topWall, invisible_wall_l,invisible_wall_r)
+    move_x = update_v[0]
+    move_y = update_v[1]
+    if update_v[2] == True:
+        pong_aux.pong_reset(pong, width, height)
+
+    # update canvas
     pong_aux.draw_everything(screen, object_array)
     pygame.display.flip()
+
 
 # Done! Time to quit.
 print("i quit.")
