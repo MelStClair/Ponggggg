@@ -53,18 +53,18 @@ def move_pong(pong, move_x, move_y, player1, player2, bottom_wall, top_wall, inv
     # if no collision then move normally
     # idea: add direction based on state of player that sent it
     # if collision then change direction
-    for i in range(1,5):
+    for i in range(0,4):
         if (pong.colliderect(player1[i]) == 1) or (pong.colliderect(player2[i]) == 1):
             move_x *= -1
-            if i == 1:
+            if i == 0:
                 move_y = move_y + 2
+            if i == 1:
+                move_y = move_y + 1
             if i == 2:
-                move_y = move_y + 1
-            if i == 3:
                 move_y = 0
-            if i == 4:
+            if i == 3:
                 move_y = move_y + 1
-            if i == 5:
+            if i == 4:
                 move_y = move_y + 2
             pong.move_ip(move_x, move_y)
 
