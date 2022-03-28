@@ -56,6 +56,7 @@ running = True
 stateP1 = "none"
 stateP2 = "none"
 pong_movement= move_x, move_y = 1,0
+ping_pong = 0
 while running:
 
     # keeping button pressed P1
@@ -107,12 +108,15 @@ while running:
                 stateP2 = "none"
 
     # move pong, update movement vector
-    update_v = pong_aux.move_pong(pong, move_x, move_y, player1, player2, bottomWall, topWall, invisible_wall_l,invisible_wall_r)
-    move_x = update_v[0]
-    move_y = update_v[1]
-    if update_v[2] == True:
-        pong_aux.pong_reset(pong, width, height)
-        pong_aux.start_screen(screen, object_array,invisible_wall_r,invisible_wall_l)
+    if ping_pong == 10:
+        update_v = pong_aux.move_pong(pong, move_x, move_y, player1, player2, bottomWall, topWall, invisible_wall_l,invisible_wall_r)
+        move_x = update_v[0]
+        move_y = update_v[1]
+        if update_v[2] == True:
+            pong_aux.pong_reset(pong, width, height)
+            pong_aux.start_screen(screen, object_array,invisible_wall_r,invisible_wall_l)
+        ping_pong = 0
+    ping_pong += 1
 
     # update canvas
     pong_aux.draw_everything(screen, object_array)
