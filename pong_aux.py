@@ -1,5 +1,27 @@
 import pygame
 
+def iquit():        # bruteforce shut down
+    pygame.quit()
+
+
+def start_screen(screen, object_array, invisible_wall_r, invisible_wall_l):
+    print("press SPACE to begin")
+    startingScreen = True
+    while startingScreen:
+        startscreenEvent = pygame.event.wait()
+        if startscreenEvent.type == pygame.QUIT:
+            iquit()
+        if startscreenEvent.type == pygame.KEYDOWN:
+            if startscreenEvent.key == pygame.K_SPACE:
+                print("starting game, get ready")
+                startingScreen = False
+
+        draw_everything(screen, object_array)
+        pygame.draw.rect(screen, (0, 0, 255), invisible_wall_r)
+        pygame.draw.rect(screen, (0, 0, 255), invisible_wall_l)
+        pygame.display.flip()
+
+
 def setstate(object, state):
     """changes the state of an object, states are used to tell us if we keep pressing something"""
     object = state
@@ -7,6 +29,8 @@ def setstate(object, state):
 
 def init_everything():
     print("is there some way to put all of the init sdtuff here but still return everything thats necessary?")
+
+
 def pong_reset(pong, width, height):
     pong.update((width/2, height/2), (pong.width, pong.height))
     print("YOU ARE A FAILURE, RESETTING NOW")

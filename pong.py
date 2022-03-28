@@ -3,10 +3,6 @@ import pong_aux
 
 pygame.init()
 
-def iquit():        # bruteforce shut down
-    pygame.quit()
-
-
 print("welcome to pong: player1 uses W,S Player 2 uses arrows")
 print("use space to start a game")
 
@@ -51,20 +47,8 @@ player1 = [player1_1, player1_2, player1_3, player1_4, player1_5]
 player2 = [player2_1, player2_2, player2_3, player2_4, player2_5]
 
 # starting screen
-startingScreen = True
-while startingScreen:
-    startscreenEvent = pygame.event.wait()
-    if startscreenEvent.type == pygame.QUIT:
-        iquit()
-    if startscreenEvent.type == pygame.KEYDOWN:
-        if startscreenEvent.key == pygame.K_SPACE:
-            print("starting game, get ready")
-            startingScreen = False
+pong_aux.start_screen(screen, object_array, invisible_wall_r, invisible_wall_l)
 
-    pong_aux.draw_everything(screen, object_array)
-    pygame.draw.rect(screen, (0,0,255), invisible_wall_r)
-    pygame.draw.rect(screen, (0,0,255), invisible_wall_l)
-    pygame.display.flip()
 
 # Run until the user asks to quit
 running = True
@@ -128,6 +112,7 @@ while running:
     move_y = update_v[1]
     if update_v[2] == True:
         pong_aux.pong_reset(pong, width, height)
+        pong_aux.start_screen(screen, object_array,invisible_wall_r,invisible_wall_l)
 
     # update canvas
     pong_aux.draw_everything(screen, object_array)
